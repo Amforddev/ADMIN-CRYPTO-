@@ -1,0 +1,6 @@
+{
+  "name": "VoltAdmin",
+  "description": "Comprehensive crypto operations, compliance monitoring, and treasury management console.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

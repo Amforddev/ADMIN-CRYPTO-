@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400..800&family=Onest:wght@400..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg-base: #0F0E0C;
+  --color-bg-paper: #16140F;
+  --color-bg-elev: #1F1B16;
+  --color-bg-high: #2A251E;
+
+  --color-lime: #D6FF3F;
+  --color-lime-soft: #B8E029;
+  --color-lime-deep: #6B7F1A;
+  --color-lime-tint: rgba(214, 255, 63, 0.12);
+
+  --color-rust: #E2552E;
+  --color-amber: #F0B23E;
+  --color-cream: #F5F1E8;
+  --color-bone: #C9C2B0;
+  --color-stone: #8C8678;
+  --color-char: #5C574E;
+
+  --color-good: #6BD96B;
+  --color-bad: #EF6C5E;
+  --color-warn: #F0B23E;
+  --color-info: #6BB6E8;
+
+  --color-rule: #2E2A22;
+  --color-rule-soft: rgba(245, 241, 232, 0.06);
+  --color-rule-strong: rgba(245, 241, 232, 0.14);
+
+  --font-sans: "Onest", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", var(--font-sans);
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  *, ::before, ::after {
+    border-color: var(--color-rule);
+  }
+}
