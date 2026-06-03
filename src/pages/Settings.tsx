@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tooltip } from "@/components/ui/tooltip"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { 
   Settings as SettingsIcon, 
   Save, 
@@ -19,7 +19,8 @@ import {
   AlertTriangle,
   Sliders,
   BellRing,
-  BookOpen
+  BookOpen,
+  HelpCircle
 } from "lucide-react"
 
 interface KycTier {
@@ -320,7 +321,10 @@ export default function Settings() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                        <div className="space-y-1.5">
                           <Tooltip content="Commission applied to users posting a buy/sell offer in the P2P orderbook (liquidity makers)." position="top">
-                            <label className="text-xs text-stone hover:text-cream transition-colors block cursor-help">Maker Fee (Crypto)</label>
+                            <span className="flex items-center gap-1 cursor-help group text-xs text-stone hover:text-cream transition-colors">
+                              <span>Maker Fee (Crypto)</span>
+                              <HelpCircle className="w-3.5 h-3.5 text-stone/60 group-hover:text-lime transition-colors" />
+                            </span>
                           </Tooltip>
                           <Input 
                             value={makerFee} 
@@ -331,7 +335,10 @@ export default function Settings() {
                        </div>
                        <div className="space-y-1.5">
                           <Tooltip content="Commission applied to users immediately matching an existing offer in the P2P orderbook (liquidity takers)." position="top">
-                            <label className="text-xs text-stone hover:text-cream transition-colors block cursor-help">Taker Fee (Crypto)</label>
+                            <span className="flex items-center gap-1 cursor-help group text-xs text-stone hover:text-cream transition-colors">
+                              <span>Taker Fee (Crypto)</span>
+                              <HelpCircle className="w-3.5 h-3.5 text-stone/60 group-hover:text-lime transition-colors" />
+                            </span>
                           </Tooltip>
                           <Input 
                             value={takerFee} 
@@ -342,7 +349,10 @@ export default function Settings() {
                        </div>
                        <div className="space-y-1.5">
                           <Tooltip content="Exchange rate premium buffer applied automatically across all Over-The-Counter currency trades." position="top">
-                            <label className="text-xs text-stone hover:text-cream transition-colors block cursor-help">OTC Margin (%)</label>
+                            <span className="flex items-center gap-1 cursor-help group text-xs text-stone hover:text-cream transition-colors">
+                              <span>OTC Margin (%)</span>
+                              <HelpCircle className="w-3.5 h-3.5 text-stone/60 group-hover:text-lime transition-colors" />
+                            </span>
                           </Tooltip>
                           <Input 
                             value={otcMargin} 
@@ -353,7 +363,10 @@ export default function Settings() {
                        </div>
                        <div className="space-y-1.5">
                           <Tooltip content="Pre-configured fee discount percent dedicated specifically to authorized corporate list accounts." position="top">
-                            <label className="text-xs text-stone hover:text-cream transition-colors block cursor-help">VIP Rate Discount</label>
+                            <span className="flex items-center gap-1 cursor-help group text-xs text-stone hover:text-cream transition-colors">
+                              <span>VIP Rate Discount</span>
+                              <HelpCircle className="w-3.5 h-3.5 text-stone/60 group-hover:text-lime transition-colors" />
+                            </span>
                           </Tooltip>
                           <Input 
                             value={vipDiscount} 
@@ -380,7 +393,12 @@ export default function Settings() {
                              </div>
                           </div>
                           <div className="flex items-center gap-2">
-                             <span className="text-[10px] text-stone">Markup</span>
+                             <Tooltip content="Gas multiplier modifier loaded onto dynamic miners fees calculation to guarantee fast processing." position="left">
+                               <span className="text-[10px] text-stone hover:text-cream flex items-center gap-1 cursor-help group">
+                                 <span>Markup</span>
+                                 <HelpCircle className="w-3 h-3 text-stone group-hover:text-lime transition-colors" />
+                               </span>
+                             </Tooltip>
                              <Input 
                                value={btcMarkup} 
                                onChange={(e) => setBtcMarkup(e.target.value)}
@@ -399,7 +417,12 @@ export default function Settings() {
                              </div>
                           </div>
                           <div className="flex items-center gap-2">
-                             <span className="text-[10px] text-stone">Markup</span>
+                             <Tooltip content="Ethereum ERC-20 multiplier used during network congestion events." position="left">
+                               <span className="text-[10px] text-stone hover:text-cream flex items-center gap-1 cursor-help group">
+                                 <span>Markup</span>
+                                 <HelpCircle className="w-3 h-3 text-stone group-hover:text-lime transition-colors" />
+                               </span>
+                             </Tooltip>
                              <Input 
                                value={ethMarkup} 
                                onChange={(e) => setEthMarkup(e.target.value)}
@@ -416,7 +439,7 @@ export default function Settings() {
                     <div>
                         <h4 className="text-sm font-medium text-cream flex items-center gap-2">
                           <AlertTriangle className="w-4 h-4 text-warn" />
-                          Emergency Fee Override
+                          <Tooltip content="Bypasses automatic Oracle rates entirely to enforce hardcoded high fee limits." position="bottom"><span className="flex items-center gap-1 cursor-help">Emergency Fee Override <HelpCircle className="w-3.5 h-3.5 text-stone shrink-0" /></span></Tooltip>
                         </h4>
                         <p className="text-[11px] text-stone max-w-xl">Forces all network withdrawal fees to a static high value during periods of extreme congestion to prevent stuck transactions.</p>
                     </div>
@@ -448,8 +471,8 @@ export default function Settings() {
                           <TableRow className="border-rule">
                              <TableHead>Tier</TableHead>
                              <TableHead>KYC Requirements</TableHead>
-                             <TableHead className="text-right">Daily Limit</TableHead>
-                             <TableHead className="text-right">Monthly Limit</TableHead>
+                             <TableHead className="text-right"><Tooltip content="Max withdrawal amount permitted in 24 hours." position="top"><span className="flex items-center gap-1 justify-end cursor-help">Daily Limit <HelpCircle className="w-3 h-3 text-stone shrink-0" /></span></Tooltip></TableHead>
+                             <TableHead className="text-right"><Tooltip content="Max withdrawal amount permitted in 30 days." position="top"><span className="flex items-center gap-1 justify-end cursor-help">Monthly Limit <HelpCircle className="w-3 h-3 text-stone shrink-0" /></span></Tooltip></TableHead>
                              <TableHead className="text-right w-24">Actions</TableHead>
                           </TableRow>
                        </TableHeader>
@@ -461,15 +484,16 @@ export default function Settings() {
                                 <TableCell className="text-right font-mono text-xs">{t.dailyLimit}</TableCell>
                                 <TableCell className="text-right font-mono text-xs">{t.monthlyLimit}</TableCell>
                                 <TableCell className="text-right">
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm" 
-                                    onClick={() => openEditTier(t)}
-                                    className="h-7 text-xs text-stone hover:text-lime hover:border-lime/30 cursor-pointer"
-                                    title={`Modify validation parameters and currency limits for verified ${t.name}`}
-                                  >
-                                    Edit
-                                  </Button>
+                                  <Tooltip content={`Modify validation parameters and currency limits for verified ${t.name}`} position="left" delay={150}>
+                                    <Button 
+                                      variant="outline" 
+                                      size="sm" 
+                                      onClick={() => openEditTier(t)}
+                                      className="h-7 text-xs text-stone hover:text-lime hover:border-lime/30 cursor-pointer"
+                                    >
+                                      Edit
+                                    </Button>
+                                  </Tooltip>
                                 </TableCell>
                              </TableRow>
                           ))}
@@ -552,7 +576,7 @@ export default function Settings() {
                  <div>
                     <div className="flex justify-between items-center mb-4">
                       <div>
-                        <h3 className="text-sm font-medium">System Alerts Routing Channels</h3>
+                        <h3 className="text-sm font-medium"><Tooltip content="Outbound notification routing definitions used to bridge server telemetry to messaging systems." position="top"><span className="flex items-center gap-1 cursor-help">System Alerts Routing Channels <HelpCircle className="w-3.5 h-3.5 text-stone shrink-0" /></span></Tooltip></h3>
                         <p className="text-[10px] text-stone mt-0.5">Define routes for real-time infrastructure and compliance failure triggers</p>
                       </div>
                       <Button 
@@ -587,13 +611,14 @@ export default function Settings() {
                                </button>
 
                                <div className="flex items-center gap-3">
-                                 <span 
-                                   onClick={() => openEditProfile(item)}
-                                   className="text-[10.5px] font-semibold text-stone cursor-pointer hover:text-lime underline"
-                                   title="Amend trigger statements or target alert channels"
-                                 >
-                                    Edit
-                                 </span>
+                                 <Tooltip content="Amend trigger statements or target alert channels for this event" position="left" delay={150}>
+                                   <span 
+                                     onClick={() => openEditProfile(item)}
+                                     className="text-[10.5px] font-semibold text-stone cursor-pointer hover:text-lime underline"
+                                   >
+                                      Edit
+                                   </span>
+                                 </Tooltip>
                                  <button
                                    onClick={() => handleDeleteProfile(item.id, item.trigger)}
                                    className="text-stone hover:text-bad cursor-pointer"
@@ -691,7 +716,7 @@ export default function Settings() {
                        <h3 className="text-[11px] font-bold uppercase tracking-wider text-stone" title="Disable public API endpoints for safety calibration">Platform Maintenance Status</h3>
                        <div className="p-4 border border-rule bg-bg-paper rounded-sm">
                           <div className="flex items-center justify-between mb-2">
-                             <span className="text-sm font-semibold text-cream">Platform Maintenance Mode</span>
+                             <span className="text-sm font-semibold text-cream cursor-help"><Tooltip content="Locks down administrative/client API nodes for emergency calibration." position="top"><span className="flex items-center gap-1">Platform Maintenance Mode <HelpCircle className="w-3.5 h-3.5 text-stone shrink-0" /></span></Tooltip></span>
                              
                              {/* Smooth custom interactive switch */}
                              <div 
@@ -730,7 +755,7 @@ export default function Settings() {
                                }}
                                className="rounded-sm border-rule bg-bg-base accent-lime w-4 h-4 cursor-pointer" 
                              />
-                             <span className="text-xs text-stone hover:text-cream">Enforce 2FA for all Admin Accounts</span>
+                             <Tooltip content="Requires hardware or software Google Authenticator keys for operations access." position="top"><span className="text-xs text-stone hover:text-cream flex items-center gap-1 cursor-help">Enforce 2FA for all Admin Accounts <HelpCircle className="w-3 h-3 text-stone shrink-0" /></span></Tooltip>
                           </label>
                           
                           <label className="flex items-center gap-3 cursor-pointer" title="Direct transfers out of cold ledger indices require dual executive approval sigs">
@@ -743,7 +768,7 @@ export default function Settings() {
                                }}
                                className="rounded-sm border-rule bg-bg-base accent-lime w-4 h-4 cursor-pointer" 
                              />
-                             <span className="text-xs text-stone hover:text-cream">Require Approval for Crypto Sweeps</span>
+                             <Tooltip content="Large smart contract multi-sig sweeps must go through dual manager signatures." position="top"><span className="text-xs text-stone hover:text-cream flex items-center gap-1 cursor-help">Require Approval for Crypto Sweeps <HelpCircle className="w-3 h-3 text-stone shrink-0" /></span></Tooltip>
                           </label>
                           
                           <label className="flex items-center gap-3 cursor-pointer" title="Rejects staff logins that trigger outside Whitelisted office IP scopes">
@@ -756,7 +781,7 @@ export default function Settings() {
                                }}
                                className="rounded-sm border-rule bg-bg-base accent-lime w-4 h-4 cursor-pointer" 
                              />
-                             <span className="text-xs text-stone hover:text-cream">Strict IP Whitelisting (Admin Panel)</span>
+                             <Tooltip content="Blocks admin dashboard access from any network outside standard organizational subnet IPs." position="top"><span className="text-xs text-stone hover:text-cream flex items-center gap-1 cursor-help">Strict IP Whitelisting (Admin Panel) <HelpCircle className="w-3 h-3 text-stone shrink-0" /></span></Tooltip>
                           </label>
                        </div>
                     </div>

@@ -52,4 +52,32 @@
   *, ::before, ::after {
     border-color: var(--color-rule);
   }
+
+  /* Light Theme Overrides */
+  :root.light, .light {
+    --color-bg-base: #F7F5EF;
+    --color-bg-paper: #FFFFFF;
+    --color-bg-elev: #EAE5D9;
+    --color-bg-high: #DDD7C7;
+
+    --color-cream: #14130E;
+    --color-bone: #434038;
+    --color-stone: #787363;
+    --color-char: #ABA594;
+
+    --color-rule: #DFDACF;
+    --color-rule-soft: rgba(20, 19, 14, 0.05);
+    --color-rule-strong: rgba(20, 19, 14, 0.12);
+
+    --color-lime: #647B00;
+    --color-lime-soft: #536600;
+    --color-lime-deep: #394700;
+    --color-lime-tint: rgba(100, 123, 0, 0.08);
+
+    --color-good: #1B8534;
+    --color-bad: #C22F2F;
+    --color-warn: #C28B00;
+    --color-info: #0277BD;
+  }
 }
+

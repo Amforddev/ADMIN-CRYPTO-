@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, useLocation } from "react-router-dom"
 import { cn } from "@/lib/utils"
+import { Tooltip } from "@/components/ui/tooltip"
 import {
   LayoutDashboard,
   Users,
@@ -101,20 +102,19 @@ function NavSection({ title, children }: { title: string, children: React.ReactN
 }
 
 function NavItem({ to, icon: Icon, label, active, badge, badgeType = 'normal', title }: { to: string, icon: any, label: string, active?: boolean, badge?: string, badgeType?: 'normal' | 'urgent', title?: string }) {
-  return (
+  const linkContent = (
     <Link 
       to={to} 
-      title={title}
       className={cn(
-        "flex items-center gap-3 px-3 py-1.5 rounded-sm text-xs transition-colors",
+        "flex items-center gap-3 px-3 py-1.5 rounded-sm text-xs transition-colors w-full",
         active ? "bg-bg-high text-cream font-medium" : "text-stone hover:text-cream hover:bg-bg-paper"
       )}
     >
-      <Icon className="w-4 h-4" />
-      <span className="flex-1">{label}</span>
+      <Icon className="w-4 h-4 flex-shrink-0" />
+      <span className="flex-1 truncate">{label}</span>
       {badge && (
         <span className={cn(
-          "text-[10px] font-mono px-1.5 py-0.5 rounded-sm flex items-center justify-center leading-none",
+          "text-[10px] font-mono px-1.5 py-0.5 rounded-sm flex items-center justify-center leading-none shrink-0",
           badgeType === 'urgent' ? "bg-bad text-white" : "bg-bg-paper text-stone border border-rule group-hover:border-stone"
         )}>
           {badge}
@@ -122,4 +122,14 @@ function NavItem({ to, icon: Icon, label, active, badge, badgeType = 'normal', t
       )}
     </Link>
   )
+
+  if (title) {
+    return (
+      <Tooltip content={title} position="right" className="w-full block" delay={150}>
+        {linkContent}
+      </Tooltip>
+    )
+  }
+
+  return linkContent
 }

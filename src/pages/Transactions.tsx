@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Tooltip } from "@/components/ui/tooltip"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -936,13 +937,17 @@ export default function Transactions() {
              <span className="text-cream font-bold">REAL-TIME: ACTIVE</span>
            </div>
            
-           <Button id="btn-add-manual-tx" size="sm" onClick={() => setShowAddTxModal(true)} className="bg-lime text-bg-base hover:bg-lime/90 font-bold text-xs gap-1 h-9 shrink-0">
-             <Plus className="w-3.5 h-3.5" /> Issue Ledger Entry
-           </Button>
+           <Tooltip content="Manually register an off-chain deposit, custom bank transfer, or standard administrative adjustment" position="bottom" delay={150}>
+             <Button id="btn-add-manual-tx" size="sm" onClick={() => setShowAddTxModal(true)} className="bg-lime text-bg-base hover:bg-lime/90 font-bold text-xs gap-1 h-9 shrink-0">
+               <Plus className="w-3.5 h-3.5" /> Issue Ledger Entry
+             </Button>
+           </Tooltip>
 
-           <Button id="btn-master-export" variant="outline" size="sm" onClick={() => executeCSVAllocation([])} className="gap-2 h-9 border-rule text-stone hover:text-cream hover:bg-bg-paper text-xs shrink-0">
-             <Download className="w-3.5 h-3.5" /> Export All
-           </Button>
+           <Tooltip content="Export the complete, filtered system ledger database to an Excel/CSV file" position="bottom" delay={150}>
+             <Button id="btn-master-export" variant="outline" size="sm" onClick={() => executeCSVAllocation([])} className="gap-2 h-9 border-rule text-stone hover:text-cream hover:bg-bg-paper text-xs shrink-0">
+               <Download className="w-3.5 h-3.5" /> Export All
+             </Button>
+           </Tooltip>
         </div>
       </div>
 

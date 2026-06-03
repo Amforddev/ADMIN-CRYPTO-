@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Tooltip } from "@/components/ui/tooltip"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -474,21 +475,23 @@ export default function CryptoOps() {
                                   </TableCell>
                                   <TableCell className="text-right text-[11px] text-stone font-mono">{row.sweep}</TableCell>
                                   <TableCell className="text-right pr-4">
-                                     <Button 
-                                        id={`btn-sweep-action-${row.asset.toLowerCase()}`}
-                                        variant="outline" 
-                                        size="sm" 
-                                        onClick={() => {
-                                          setSweepingWallet(row)
-                                          setSweepAmount(row.hot.toString())
-                                          // preselect matching coin's address from whitelisted list if any
-                                          const match = addresses.find(a => a.asset === row.asset && a.status === "Whitelisted")
-                                          setSelectedDestAddress(match ? match.label : "Cold Vault Alpha")
-                                        }}
-                                        className="h-7 text-[10px] uppercase font-bold border-lime/30 text-lime hover:bg-lime/10"
-                                     >
-                                       Sweep to Cold
-                                     </Button>
+                                     <Tooltip content={`Sweep excess hot-wallet balance for ${row.asset} into whitelisted cold vault storage`} position="left" delay={150}>
+                                        <Button 
+                                           id={`btn-sweep-action-${row.asset.toLowerCase()}`}
+                                           variant="outline" 
+                                           size="sm" 
+                                           onClick={() => {
+                                             setSweepingWallet(row)
+                                             setSweepAmount(row.hot.toString())
+                                             // preselect matching coin's address from whitelisted list if any
+                                             const match = addresses.find(a => a.asset === row.asset && a.status === "Whitelisted")
+                                             setSelectedDestAddress(match ? match.label : "Cold Vault Alpha")
+                                           }}
+                                           className="h-7 text-[10px] uppercase font-bold border-lime/30 text-lime hover:bg-lime/10 w-full"
+                                        >
+                                          Sweep to Cold
+                                        </Button>
+                                     </Tooltip>
                                   </TableCell>
                                </TableRow>
                             )
@@ -585,32 +588,36 @@ export default function CryptoOps() {
                             }`}>{row.age}</TableCell>
                             <TableCell className="text-right pr-4">
                                {row.status === 'stuck' ? (
-                                  <Button 
-                                     id={`btn-rbf-trigger-${row.id}`}
-                                     variant="outline" 
-                                     size="sm" 
-                                     onClick={() => {
-                                        setBoostingTx(row)
-                                        setBoostFeeSat("54")
-                                     }}
-                                     className="h-7 text-[10px] border-warn/40 text-warn hover:bg-warn/15 font-bold uppercase transition-all"
-                                  >
-                                    Replace-by-fee
-                                  </Button>
+                                  <Tooltip content="Initiate a Replace-By-Fee rebroadcast to accelerate mining confirmation" position="left" delay={150}>
+                                    <Button 
+                                       id={`btn-rbf-trigger-${row.id}`}
+                                       variant="outline" 
+                                       size="sm" 
+                                       onClick={() => {
+                                          setBoostingTx(row)
+                                          setBoostFeeSat("54")
+                                       }}
+                                       className="h-7 text-[10px] border-warn/40 text-warn hover:bg-warn/15 font-bold uppercase transition-all"
+                                    >
+                                      Replace-by-fee
+                                    </Button>
+                                  </Tooltip>
                                ) : row.status === 'pending' ? (
-                                  <Button 
-                                     id={`btn-force-credit-trigger-${row.id}`}
-                                     variant="ghost" 
-                                     size="sm" 
-                                     onClick={() => {
-                                        setCreditingTx(row)
-                                        setOverridePass("")
-                                        setOverrideNotes("")
-                                     }}
-                                     className="h-7 text-[10px] text-stone hover:text-lime hover:bg-bg-base/80 underline font-medium cursor-pointer"
-                                  >
-                                    Force credit (4-eyes)
-                                  </Button>
+                                  <Tooltip content="Manually credit user balance overriding required network confirmations (dual auth required)" position="left" delay={150}>
+                                    <Button 
+                                       id={`btn-force-credit-trigger-${row.id}`}
+                                       variant="ghost" 
+                                       size="sm" 
+                                       onClick={() => {
+                                          setCreditingTx(row)
+                                          setOverridePass("")
+                                          setOverrideNotes("")
+                                       }}
+                                       className="h-7 text-[10px] text-stone hover:text-lime hover:bg-bg-base/80 underline font-medium cursor-pointer"
+                                    >
+                                      Force credit (4-eyes)
+                                    </Button>
+                                  </Tooltip>
                                ) : (
                                   <span className="text-[10px] text-lime font-medium font-mono uppercase tracking-wide flex items-center justify-end gap-1 px-2">
                                      <Check className="w-3 h-3 stroke-[3]" /> Credited
@@ -632,18 +639,20 @@ export default function CryptoOps() {
                   <p className="text-[11px] text-stone leading-relaxed max-w-xl">
                     Manage whitelisted corporate and treasury addresses for secure withdrawals.
                   </p>
-                  <Button 
-                    id="btn-add-address-trigger"
-                    size="sm" 
-                    onClick={() => {
-                      setShowAddAddressModal(true)
-                      setNewLabel("")
-                      setNewAddr("")
-                    }}
-                    className="h-8 text-xs gap-1.5 bg-lime font-bold hover:bg-lime/90 text-bg-base border border-lime shadow-2xl rounded"
-                  >
-                    <Plus className="w-3.5 h-3.5 stroke-[3]"/> ADD ADDRESS
-                  </Button>
+                  <Tooltip content="Register a new receiving address for fast treasury withdrawals" position="bottom" delay={150}>
+                    <Button 
+                      id="btn-add-address-trigger"
+                      size="sm" 
+                      onClick={() => {
+                        setShowAddAddressModal(true)
+                        setNewLabel("")
+                        setNewAddr("")
+                      }}
+                      className="h-8 text-xs gap-1.5 bg-lime font-bold hover:bg-lime/90 text-bg-base border border-lime shadow-2xl rounded"
+                    >
+                      <Plus className="w-3.5 h-3.5 stroke-[3]"/> ADD ADDRESS
+                    </Button>
+                  </Tooltip>
                 </div>
 
                 <Table id="table-address-book-whitelisted">

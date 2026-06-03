@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Outlet, useLocation } from "react-router-dom"
+import { motion, useDragControls } from "motion/react"
 import { Sidebar } from "@/components/Sidebar"
 import { Topbar } from "@/components/Topbar"
 import { Button } from "@/components/ui/button"
@@ -308,17 +309,19 @@ export default function AdminLayout() {
       </div>
 
       {/* FLOATING ACTION TRIGGER COMPANION BUTTON */}
-      <button 
+      <motion.button 
         id="btn-trigger-companion-drawer"
+        drag
+        dragMomentum={false}
         onClick={() => setDrawerOpen(!drawerOpen)}
-        className={`fixed right-0 top-1/2 -translate-y-1/2 z-40 bg-lime text-bg-base font-bold text-[10px] tracking-widest uppercase py-4 px-1 rounded-l-md shadow-[0_4px_24px_rgba(132,204,22,0.25)] hover:bg-lime/90 flex flex-col items-center gap-2 transition-all cursor-pointer select-none border-y border-l border-white/20`}
+        className={`fixed right-0 z-40 bg-lime text-bg-base font-bold text-[10px] tracking-widest uppercase py-4 px-1 rounded-l-md shadow-[0_4px_24px_rgba(132,204,22,0.25)] hover:bg-lime/90 flex flex-col items-center gap-2 cursor-pointer select-none border-y border-l border-white/20`}
         title="Open interactive operations tutorial companion and system checklists"
-        style={{ writingMode: "vertical-lr" }}
+        style={{ writingMode: "vertical-lr", top: "50%", transform: "translateY(-50%)", touchAction: "none" }}
       >
         <span className="flex items-center gap-1">
           💡 COMPANION Drawer {drawerOpen ? "▶" : "◀"}
         </span>
-      </button>
+      </motion.button>
 
       {/* COMPANION MANUAL DRAWER SLIDE-OUT */}
       <div 

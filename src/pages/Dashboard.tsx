@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { BarChart, Bar, ResponsiveContainer, XAxis, Tooltip } from "recharts"
+import { BarChart, Bar, ResponsiveContainer, XAxis, Tooltip as RechartsTooltip } from "recharts"
+import { Tooltip } from "@/components/ui/tooltip"
 import { ArrowUpRight, ArrowDownRight, AlertTriangle, ShieldCheck, Activity, Search } from "lucide-react"
 
 export default function Dashboard() {
@@ -63,7 +64,9 @@ export default function Dashboard() {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-[11px] px-2 py-1 bg-bg-elev rounded border border-rule text-stone">{alert.assignee}</span>
-                    <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => navigate('/admin/compliance')}>Investigate</Button>
+                    <Tooltip content="Delegate this alert event to compliance auditors for manual review" position="left" delay={150}>
+                      <Button variant="outline" size="sm" className="h-7 text-xs flex-shrink-0" onClick={() => navigate('/admin/compliance')}>Investigate</Button>
+                    </Tooltip>
                   </div>
                 </div>
               )) : (
@@ -180,7 +183,9 @@ export default function Dashboard() {
                       <TableCell className="py-2 text-[11px] text-stone text-right">{row.age}</TableCell>
                       <TableCell className="py-2 text-right">
                          {row.assignee === "unassigned" ? (
+                          <Tooltip content="Navigate to User Profile Directory to manually review the flagged BVN mismatch" position="left" delay={150}>
                             <Button size="sm" variant="outline" className="h-6 text-[10px]" onClick={() => navigate('/admin/users')}>Assign</Button>
+                          </Tooltip>
                          ) : (
                             <span className="text-[11px] px-2 py-0.5 bg-bg-paper rounded border border-rule text-stone">{row.assignee}</span>
                          )}
@@ -198,7 +203,9 @@ export default function Dashboard() {
                       <TableCell className="py-2 text-[11px] text-stone text-right">{row.age}</TableCell>
                       <TableCell className="py-2 text-right">
                          {row.assignee === "unassigned" ? (
+                          <Tooltip content="Review invalid giftcard submissions in the Voucher Redemption queue" position="left" delay={150}>
                             <Button size="sm" variant="outline" className="h-6 text-[10px]" onClick={() => navigate('/admin/giftcards')}>Assign</Button>
+                          </Tooltip>
                          ) : (
                             <span className="text-[11px] px-2 py-0.5 bg-bg-paper rounded border border-rule text-stone">{row.assignee}</span>
                          )}
@@ -215,7 +222,9 @@ export default function Dashboard() {
                       <TableCell className="py-2 text-[11px] text-stone text-right">{row.age}</TableCell>
                       <TableCell className="py-2 text-right">
                          {row.assignee === "unassigned" ? (
+                          <Tooltip content="Open P2P Arbitration center to immediately mediate this unassigned frozen dispute" position="left" delay={150}>
                             <Button size="sm" variant="outline" className="h-6 text-[10px]" onClick={() => navigate('/admin/disputes')}>Assign</Button>
+                          </Tooltip>
                          ) : (
                             <span className="text-[11px] px-2 py-0.5 bg-bg-paper rounded border border-rule text-stone">{row.assignee}</span>
                          )}
@@ -226,11 +235,13 @@ export default function Dashboard() {
              </Table>
           </div>
           <div className="p-3 border-t border-rule mt-auto flex justify-end">
-             <Button variant="link" className="text-xs h-6 px-2 text-stone hover:text-cream" onClick={() => {
-                if (opsTab === 'kyc') navigate('/admin/users');
-                else if (opsTab === 'giftcards') navigate('/admin/giftcards');
-                else navigate('/admin/disputes');
-             }}>View all &rarr;</Button>
+             <Tooltip content="Open full detailed view of all pending queues and assignments for this module" position="left" delay={150}>
+               <Button variant="link" className="text-xs h-6 px-2 text-stone hover:text-cream" onClick={() => {
+                  if (opsTab === 'kyc') navigate('/admin/users');
+                  else if (opsTab === 'giftcards') navigate('/admin/giftcards');
+                  else navigate('/admin/disputes');
+               }}>View all &rarr;</Button>
+             </Tooltip>
           </div>
         </Card>
        </div>

@@ -3,7 +3,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from "recharts"
+import { BarChart, Bar, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Cell } from "recharts"
+import { Tooltip as UITooltip } from "@/components/ui/tooltip"
 import { Landmark, ArrowUpRight, ArrowDownRight, RefreshCcw } from "lucide-react"
 
 export default function Treasury() {
@@ -64,7 +65,9 @@ export default function Treasury() {
          <Card className="bg-bg-elev border-rule flex flex-col">
             <div className="p-4 border-b border-rule flex justify-between items-center bg-bg-paper">
                <h3 className="font-medium text-sm text-cream flex items-center gap-2"><Landmark className="w-4 h-4 text-stone"/> Fiat Balances</h3>
-               <Button id="btn-fiat-reconcile" variant="outline" size="sm" className="h-7 text-[10px] gap-1"><RefreshCcw className="w-3 h-3"/> Reconcile All</Button>
+               <UITooltip content="Trigger a background ledger synchronization against core external bank APIs" position="top" delay={150}>
+                 <Button id="btn-fiat-reconcile" variant="outline" size="sm" className="h-7 text-[10px] gap-1"><RefreshCcw className="w-3 h-3"/> Reconcile All</Button>
+               </UITooltip>
             </div>
             <Table>
                <TableHeader>
@@ -111,7 +114,7 @@ export default function Treasury() {
                <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={pnlData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                      <XAxis dataKey="name" stroke="#8C8678" fontSize={10} tickLine={false} axisLine={false} />
-                     <Tooltip 
+                     <RechartsTooltip 
                         cursor={{fill: '#1F1B16'}} 
                         contentStyle={{ backgroundColor: '#16140F', border: '1px solid #2E2A22', borderRadius: '4px', fontSize: '11px', color: '#F5F1E8' }}
                         formatter={(value) => [`${value}M NGN`, 'Amount']}

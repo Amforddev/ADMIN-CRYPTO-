@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Download, Search, Filter, MoreHorizontal, CheckCircle, X, Lock, UserMinus, Loader2, RefreshCw } from "lucide-react"
+import { Tooltip } from "@/components/ui/tooltip"
 
 const MOCK_USERS = [
   { id: "usr_8f92ma", name: "Adaeze Okonkwo", email: "adaeze@example.com", tier: "Silver", status: "Active", country: "NG", volume: "₦4.2M", lastActive: "2m ago", trades: 14, issues: 0 },
@@ -171,25 +172,27 @@ export default function UsersList() {
           <h1 className="text-xl font-display font-medium">Users</h1>
           <p className="text-stone text-xs mt-1">84,210 users total</p>
         </div>
-        <Button 
-          id="btn-export-users"
-          variant="outline" 
-          disabled={exporting}
-          className="gap-2 h-9 text-xs"
-          onClick={triggerExport}
-        >
-          {exporting ? (
-            <>
-              <Loader2 className="w-3.5 h-3.5 animate-spin" />
-              Preparing...
-            </>
-          ) : (
-            <>
-              <Download className="w-3.5 h-3.5" />
-              Export
-            </>
-          )}
-        </Button>
+        <Tooltip content="Export all registered, filtered users into a standard CSV roster spreadsheet" position="bottom" delay={150}>
+          <Button 
+            id="btn-export-users"
+            variant="outline" 
+            disabled={exporting}
+            className="gap-2 h-9 text-xs"
+            onClick={triggerExport}
+          >
+            {exporting ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                Preparing...
+              </>
+            ) : (
+              <>
+                <Download className="w-3.5 h-3.5" />
+                Export
+              </>
+            )}
+          </Button>
+        </Tooltip>
       </div>
 
       <Card className="bg-bg-elev border-rule overflow-hidden">
@@ -201,32 +204,38 @@ export default function UsersList() {
               <span className="text-xs text-lime font-mono font-medium">{selectedCount} users selected for bulk administration</span>
             </div>
             <div className="flex items-center gap-2">
-              <Button 
-                id="btn-bulk-freeze"
-                variant="outline" 
-                size="sm" 
-                className="h-7 text-[10px] border-warn/30 text-warn hover:bg-warn/10 hover:text-warn gap-1 font-bold"
-                onClick={handleBulkFreeze}
-              >
-                <Lock className="w-3 h-3" /> Bulk Freeze
-              </Button>
-              <Button 
-                id="btn-bulk-suspend"
-                variant="outline" 
-                size="sm" 
-                className="h-7 text-[10px] border-bad/30 text-bad hover:bg-bad/10 hover:text-bad gap-1 font-bold"
-                onClick={handleBulkSuspend}
-              >
-                <UserMinus className="w-3 h-3" /> Bulk Suspend
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-7 text-[10px] text-stone hover:text-cream px-2"
-                onClick={() => setSelectedRowIds({})}
-              >
-                Clear Selection
-              </Button>
+              <Tooltip content="Freeze all assets and prevent outgoing transfers for selected user accounts" position="bottom" delay={150}>
+                <Button 
+                  id="btn-bulk-freeze"
+                  variant="outline" 
+                  size="sm" 
+                  className="h-7 text-[10px] border-warn/30 text-warn hover:bg-warn/10 hover:text-warn gap-1 font-bold"
+                  onClick={handleBulkFreeze}
+                >
+                  <Lock className="w-3 h-3" /> Bulk Freeze
+                </Button>
+              </Tooltip>
+              <Tooltip content="Permanently suspend accounts and restrict active dashboard access for selected users" position="bottom" delay={150}>
+                <Button 
+                  id="btn-bulk-suspend"
+                  variant="outline" 
+                  size="sm" 
+                  className="h-7 text-[10px] border-bad/30 text-bad hover:bg-bad/10 hover:text-bad gap-1 font-bold"
+                  onClick={handleBulkSuspend}
+                >
+                  <UserMinus className="w-3 h-3" /> Bulk Suspend
+                </Button>
+              </Tooltip>
+              <Tooltip content="Deselect all accounts in the current view" position="bottom" delay={150}>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="h-7 text-[10px] text-stone hover:text-cream px-2"
+                  onClick={() => setSelectedRowIds({})}
+                >
+                  Clear Selection
+                </Button>
+              </Tooltip>
             </div>
           </div>
         )}
@@ -279,18 +288,20 @@ export default function UsersList() {
             </div>
 
             {(tierFilter !== "All" || statusFilter !== "All" || countryFilter !== "All") && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 text-[10px] text-lime hover:text-lime/80"
-                onClick={() => {
-                  setTierFilter("All")
-                  setStatusFilter("All")
-                  setCountryFilter("All")
-                }}
-              >
-                Reset Filters
-              </Button>
+              <Tooltip content="Revert table criteria and active filters to default views" position="bottom" delay={150}>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="h-8 text-[10px] text-lime hover:text-lime/80"
+                  onClick={() => {
+                    setTierFilter("All")
+                    setStatusFilter("All")
+                    setCountryFilter("All")
+                  }}
+                >
+                  Reset Filters
+                </Button>
+              </Tooltip>
             )}
           </div>
 
@@ -468,12 +479,16 @@ export default function UsersList() {
         <div className="p-4 border-t border-rule flex items-center justify-between text-xs text-stone bg-bg-paper">
           <span>Showing {filteredUsers.length} of 84,210 users</span>
           <div className="flex gap-1">
-            <Button variant="outline" size="sm" className="h-7 cursor-not-allowed opacity-50 text-[11px]">Prev</Button>
+            <Tooltip content="Go to previous page in directory" position="top" delay={150}>
+              <Button variant="outline" size="sm" className="h-7 cursor-not-allowed opacity-50 text-[11px]">Prev</Button>
+            </Tooltip>
             <Button variant="outline" size="sm" className="h-7 text-cream border-stone text-[11px]">1</Button>
             <Button variant="outline" size="sm" className="h-7 text-[11px]">2</Button>
             <Button variant="outline" size="sm" className="h-7 text-[11px]">3</Button>
             <span className="px-2">...</span>
-            <Button variant="outline" size="sm" className="h-7 text-[11px]">Next</Button>
+            <Tooltip content="Load next 100 directory records" position="top" delay={150}>
+              <Button variant="outline" size="sm" className="h-7 text-[11px]">Next</Button>
+            </Tooltip>
           </div>
         </div>
       </Card>
