@@ -317,10 +317,11 @@ export default function UsersList() {
           </div>
         </div>
 
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent">
-              <TableHead className="w-10 text-center">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="w-10 text-center">
                 <input 
                   type="checkbox" 
                   className="rounded-sm bg-bg-paper border-rule accent-lime w-3.5 h-3.5 cursor-pointer mt-1" 
@@ -475,6 +476,7 @@ export default function UsersList() {
             )}
           </TableBody>
         </Table>
+        </div>
 
         <div className="p-4 border-t border-rule flex items-center justify-between text-xs text-stone bg-bg-paper">
           <span>Showing {filteredUsers.length} of 84,210 users</span>

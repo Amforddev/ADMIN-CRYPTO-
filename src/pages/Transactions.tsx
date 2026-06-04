@@ -1161,7 +1161,7 @@ export default function Transactions() {
         )}
 
         {/* Dynamic Database Table Frame */}
-        <div className="overflow-y-auto flex-1 p-0 relative">
+        <div className="overflow-auto flex-1 p-0 relative min-h-[400px]">
           <Table>
             <TableHeader className="sticky top-0 bg-bg-elev shadow-[0_1px_0_var(--color-rule)] z-10 select-none">
               <TableRow className="hover:bg-transparent border-none">

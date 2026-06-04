@@ -22,11 +22,11 @@ import {
   HelpCircle
 } from "lucide-react"
 
-export function Sidebar() {
+export function Sidebar({ className }: { className?: string }) {
   const location = useLocation()
 
   return (
-    <aside className="w-[240px] flex-shrink-0 flex flex-col bg-bg-elev border-r border-rule h-screen overflow-y-auto">
+    <aside className={cn("w-[260px] lg:w-[240px] flex-shrink-0 flex flex-col bg-bg-elev border-r border-rule h-screen overflow-y-auto", className)}>
       <div className="p-4 border-b border-rule flex items-center gap-2">
         <div className="w-6 h-6 bg-lime rounded-sm text-bg-base font-display font-bold flex items-center justify-center text-xs">V</div>
         <div className="font-display font-medium text-sm">

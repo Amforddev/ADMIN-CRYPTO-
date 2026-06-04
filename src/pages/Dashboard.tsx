@@ -168,7 +168,7 @@ export default function Dashboard() {
                 <span onClick={() => setOpsTab("disputes")} className={`border-b pb-1 block cursor-pointer transition-colors ${opsTab === "disputes" ? "text-lime border-lime font-medium" : "text-stone border-transparent hover:text-cream"}`}>Disputes</span>
              </div>
           </CardHeader>
-          <div className="p-0 overflow-hidden flex-1">
+          <div className="p-0 overflow-x-auto flex-1">
              <Table>
                 <TableBody>
                   {opsTab === "kyc" && [
@@ -251,21 +251,23 @@ export default function Dashboard() {
 
 function StatTile({ label, value, delta, trend, hasAlert, onClick }: { label: string, value: string, delta: string, trend: "good"|"bad"|"neutral", hasAlert?: boolean, onClick?: () => void }) {
   return (
-    <Card className={`bg-bg-elev border-rule overflow-hidden relative shrink-0 min-w-[140px] ${onClick ? 'cursor-pointer hover:border-lime/30 transition-colors hover:bg-bg-paper' : ''}`} onClick={onClick}>
-      {hasAlert && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-bad shrink-0"></span>}
-      <CardContent className="p-4 flex flex-col justify-between h-full space-y-2">
-        <p className="text-[10px] font-medium text-stone uppercase tracking-wide">{label}</p>
-        <div>
-          <p className="text-2xl font-display text-cream leading-none tracking-tight">{value}</p>
-          {delta && (
-            <div className="mt-2 flex items-center gap-1 text-[11px]">
-              {trend === 'good' && <span className="bg-good/20 text-good px-1 rounded inline-flex items-center leading-tight font-mono">{delta}</span>}
-              {trend === 'bad' && <span className="bg-bad/20 text-bad px-1 rounded inline-flex items-center leading-tight font-mono">{delta}</span>}
-              {trend === 'neutral' && <span className="text-stone font-mono">{delta}</span>}
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+    <Tooltip content={`View detailed metrics and historical logs for ${label.toLowerCase()}`} position="bottom" delay={150}>
+      <Card className={`bg-bg-elev border-rule overflow-hidden relative shrink-0 min-w-[130px] w-full ${onClick ? 'cursor-pointer hover:border-lime/30 transition-colors hover:bg-bg-paper' : ''}`} onClick={onClick}>
+        {hasAlert && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-bad shrink-0"></span>}
+        <CardContent className="p-4 flex flex-col justify-between h-full space-y-2">
+          <p className="text-[10px] font-medium text-stone uppercase tracking-wide">{label}</p>
+          <div>
+            <p className="text-2xl font-display text-cream leading-none tracking-tight">{value}</p>
+            {delta && (
+              <div className="mt-2 flex items-center gap-1 text-[11px]">
+                {trend === 'good' && <span className="bg-good/20 text-good px-1 rounded inline-flex items-center leading-tight font-mono">{delta}</span>}
+                {trend === 'bad' && <span className="bg-bad/20 text-bad px-1 rounded inline-flex items-center leading-tight font-mono">{delta}</span>}
+                {trend === 'neutral' && <span className="text-stone font-mono">{delta}</span>}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </Tooltip>
   )
 }

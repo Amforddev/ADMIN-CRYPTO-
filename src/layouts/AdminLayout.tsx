@@ -221,6 +221,7 @@ const DEFAULT_GUIDE: ModuleGuide = {
 export default function AdminLayout() {
   const location = useLocation()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentGuide, setCurrentGuide] = useState<ModuleGuide>(DEFAULT_GUIDE)
 
   // Find appropriate guide based on current route
@@ -296,14 +297,31 @@ export default function AdminLayout() {
 
   const ToggleIcon = currentGuide.icon || HelpCircle
 
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [location.pathname])
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bg-base text-cream text-[13px] relative font-sans">
-      <Sidebar />
+      {/* Mobile overlay for sidebar */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+      
+      {/* Sidebar container */}
+      <div className={`fixed lg:relative z-50 h-full w-[260px] lg:w-auto transform transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <Sidebar className="w-full h-full" />
+      </div>
+
       <div className="flex flex-col flex-1 min-w-0">
-        <Topbar />
+        <Topbar onMobileToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
         
         {/* Main Workspace Frame */}
-        <main className="flex-1 overflow-y-auto p-6 relative">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 relative">
           <Outlet />
         </main>
       </div>
@@ -314,7 +332,7 @@ export default function AdminLayout() {
         drag
         dragMomentum={false}
         onClick={() => setDrawerOpen(!drawerOpen)}
-        className={`fixed right-0 z-40 bg-lime text-bg-base font-bold text-[10px] tracking-widest uppercase py-4 px-1 rounded-l-md shadow-[0_4px_24px_rgba(132,204,22,0.25)] hover:bg-lime/90 flex flex-col items-center gap-2 cursor-pointer select-none border-y border-l border-white/20`}
+        className={`hidden md:flex fixed right-0 z-40 bg-lime text-bg-base font-bold text-[10px] tracking-widest uppercase py-4 px-1 rounded-l-md shadow-[0_4px_24px_rgba(132,204,22,0.25)] hover:bg-lime/90 flex-col items-center gap-2 cursor-pointer select-none border-y border-l border-white/20`}
         title="Open interactive operations tutorial companion and system checklists"
         style={{ writingMode: "vertical-lr", top: "50%", transform: "translateY(-50%)", touchAction: "none" }}
       >

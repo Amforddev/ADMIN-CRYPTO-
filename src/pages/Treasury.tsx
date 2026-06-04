@@ -69,35 +69,37 @@ export default function Treasury() {
                  <Button id="btn-fiat-reconcile" variant="outline" size="sm" className="h-7 text-[10px] gap-1"><RefreshCcw className="w-3 h-3"/> Reconcile All</Button>
                </UITooltip>
             </div>
-            <Table>
-               <TableHeader>
-                  <TableRow className="border-rule">
-                     <TableHead>Provider / Account</TableHead>
-                     <TableHead className="text-right">Balance</TableHead>
-                     <TableHead className="text-center">Status</TableHead>
-                  </TableRow>
-               </TableHeader>
-               <TableBody>
-                  {[
-                     { provider: "GTBank (Primary Corporate)", balance: "₦8,500,000,000", status: "sync", diff: "" },
-                     { provider: "Paystack Settlement", balance: "₦4,200,500,000", status: "diff", diff: "Diff: ₦45,000" },
-                     { provider: "Monnify Settlement", balance: "₦1,150,000,000", status: "sync", diff: "" },
-                     { provider: "Mobile Money Float", balance: "₦389,500,500", status: "sync", diff: "" },
-                  ].map((row, i) => (
-                     <TableRow key={i}>
-                        <TableCell className="font-medium text-xs">{row.provider}</TableCell>
-                        <TableCell className="text-right font-mono text-xs">{row.balance}</TableCell>
-                        <TableCell className="text-center">
-                           {row.status === 'sync' ? (
-                              <Badge variant="success" className="bg-good/10 text-good border-good/20 text-[9px] uppercase">In Sync</Badge>
-                           ) : (
-                              <Badge variant="warning" className="bg-warn/10 text-warn border-warn/30 text-[9px] uppercase">{row.diff}</Badge>
-                           )}
-                        </TableCell>
+            <div className="overflow-x-auto">
+               <Table>
+                  <TableHeader>
+                     <TableRow className="border-rule">
+                        <TableHead>Provider / Account</TableHead>
+                        <TableHead className="text-right">Balance</TableHead>
+                        <TableHead className="text-center">Status</TableHead>
                      </TableRow>
-                  ))}
-               </TableBody>
-            </Table>
+                  </TableHeader>
+                  <TableBody>
+                     {[
+                        { provider: "GTBank (Primary Corporate)", balance: "₦8,500,000,000", status: "sync", diff: "" },
+                        { provider: "Paystack Settlement", balance: "₦4,200,500,000", status: "diff", diff: "Diff: ₦45,000" },
+                        { provider: "Monnify Settlement", balance: "₦1,150,000,000", status: "sync", diff: "" },
+                        { provider: "Mobile Money Float", balance: "₦389,500,500", status: "sync", diff: "" },
+                     ].map((row, i) => (
+                        <TableRow key={i}>
+                           <TableCell className="font-medium text-xs">{row.provider}</TableCell>
+                           <TableCell className="text-right font-mono text-xs">{row.balance}</TableCell>
+                           <TableCell className="text-center">
+                              {row.status === 'sync' ? (
+                                 <Badge variant="success" className="bg-good/10 text-good border-good/20 text-[9px] uppercase">In Sync</Badge>
+                              ) : (
+                                 <Badge variant="warning" className="bg-warn/10 text-warn border-warn/30 text-[9px] uppercase">{row.diff}</Badge>
+                              )}
+                           </TableCell>
+                        </TableRow>
+                     ))}
+                  </TableBody>
+               </Table>
+            </div>
          </Card>
          
          {/* Section 3: P&L Breakdown */}
